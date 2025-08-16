@@ -1,0 +1,82 @@
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title>Spoiler</title>
+  <link rel="stylesheet" type= "text/css" href="static/style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://kit.fontawesome.com/e01c8e7b4f.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="bg-img">
+        <div class="site-logo">
+            <a href="/"><img  class="logo" src="static/main_logo.png"></a>
+          </div>
+        <div class="container">
+          <header>Sign up </header>
+          <form action="{{ url_for('register') }}"  method="post">
+            <div class="msg">{{ message }}</div>
+              <div class="user-details">
+                <div class="input-box">
+                    <span class="details">First name</span>
+                    <input name="firstname" type="text" placeholder="Enter your first name" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Last name</span>
+                    <input name="lastname" type="text" placeholder="Enter your last name" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">E-mail</span>
+                    <input name="email" type="email" placeholder="Enter your E-mail" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Password</span>
+                    <input name="password" type="password" placeholder="Enter your password" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Confirm password</span>
+                    <input type="password" placeholder="Confirm your password" required>
+                </div>
+                <div class="input-box">
+                    <span class="details">Cellphone number</span>
+                    <input name="cell" type="text" placeholder="Enter your Cellphone" required>
+                </div>
+                <div class="gender-details">
+                    <input type="radio" name="gender" id="dot-1" data-validate="{'validate-one-required-by-name':true}" value="Female" required>
+                    <input type="radio" name="gender" id="dot-2" data-validate="{'validate-one-required-by-name':true}" value="Male">
+                    <input type="radio" name="gender" id="dot-3" data-validate="{'validate-one-required-by-name':true}" value="N/A">
+                    <span class="gender-title">Gender</span>
+                    <div class="gender-category">
+                        <label for="dot-1">
+                            <span class="dot one"></span>
+                            <span class="gender">Female</span>
+                        </label>
+                        <label for="dot-2">
+                            <span class="dot two"></span>
+                            <span class="gender">Male</span>
+                        </label>
+                        <label for="dot-3">
+                            <span class="dot three"></span>
+                            <span class="gender">Prefer not to say</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="register_btn">
+                    <input type="submit" value="Sign-up">
+                </div>
+                <div class="back_btn" >
+                    <input type="submit" value="Back to login" onclick="location.href='/dashboard'">
+                </div>
+              </div>
+          </form>
+        
+        </div>
+    </div>
+ 
+
+</body>
+
+  
+
+</html>

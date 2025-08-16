@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700|Poppins:400,500&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+/* body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+} */
+.bg-img{
+  background: #1d2d50;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+.logo {
+    margin-left: 20px;
+    width: 200px;
+    height: 100px;
+    z-index: -1;
+
+  }
+/* .bg-img:after{
+  position: relative;
+  content: '';
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0,0,0.7);
+} */
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    width: 370px;
+    text-align: center;
+    padding: 60px 32px;
+    background: rgba(255, 255,255,0.14);
+    box-shadow: -1px 4px 28px 0px rgba(0, 0,0,0.75);
+}
+.content header{
+    color: white;
+    font-size: 33px;
+    font-weight: 600px;
+    margin: 0 0 35px 0; 
+    font-family: 'Montserrat', sans-serif;
+
+}
+.msg{
+    color: red;
+    font-family: 'Montserrat', sans-serif;
+}
+.field{
+    position: relative;
+    height: 45px;
+    width: 100%;
+    display: flex;
+    background: rgba(255, 255,255,0.74);
+}
+.field input{
+    height: 100%;
+    width: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #222;
+    font-size: 16px;
+    font-family: 'Poppins',sans-serif;
+
+}
+.show_password{
+    position:absolute;
+    right: 13px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #222;
+    cursor: pointer;
+    display: none;
+    font-family: 'Montserrat',sans-serif;
+    
+}
+.password:valid ~ .show_password{
+    display: block;
+}
+.field span{
+    color: #222;
+    width: 40px;
+    line-height: 45px;
+}
+.space {
+    margin-top: 16px;
+}
+.pass{
+    text-align: left;
+    margin: 10px 0;
+}
+.pass a{
+    color: white;
+    font-family: 'Poppins',sans-serif;
+    text-decoration: none;
+}
+.pass:hover a{
+    text-decoration: underline;
+}
+input[type="submit"]{
+    background: #2691d9;
+    border: 1px solid #1d2d50;
+    color: white;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 600;
+    font-family: 'Montserrat',sans-serif;
+}
+input[type="submit"]:hover{
+    background: rgb(59, 34, 65);
+}
+.login{
+    color: white;
+    margin: 20px 0;
+    font-family: 'Poppins',sans-serif;
+}
+.link{
+    display: flex;
+    cursor: pointer;
+    color: white;
+    margin: 0 0 20px 0;
+}
+.facebook, .google{
+    width: 100%;
+    height: 45px;
+    line-height: 45px;
+    margin-top: 10px;
+    margin-left: 10px;
+}
+.facebook{
+    margin-left: 0;
+    background: #4267B2;
+    border: 1px solid #3e61a8;
+}
+.google{
+    background: #E1306C;
+    border: 1px solid #3e61a8;
+}
+
+.facebook i{
+    width: 40px;
+    line-height: 45px;
+}
+.google i{
+    width: 40px;
+    line-height: 45px;
+}
+.link i{
+    font-size: 17px;
+}
+/* .link span{
+    font-size: 16px;
+    
+    letter-spacing: 1px;
+    margin-left: 8px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    font-weight: 500;
+    font-family: 'Poppins',sans-serif;
+} */
+.signup{
+    color: white;
+    font-size: 15px;
+    font-family: 'Poppins',sans-serif;
+}
+.signup a{
+    color: #3498db;
+    text-decoration: none;
+}
+.signup a:hover{
+    text-decoration: underline;
+}
+
+/* ======================================= Register Styles ================================================ */
+.container{
+    max-width: 500px;
+    width: 100%;
+    background: rgba(255, 255,255,0.14);
+    padding: 25px 30px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 10;
+    border-radius: 8px;
+    box-shadow: -1px 4px 28px 0px rgba(0, 0,0,0.75);
+}
+.container header{
+    color: white;
+    font-size: 33px;
+    font-weight: 600px;
+    margin: 0 0 15px 0; 
+    font-family: 'Montserrat', sans-serif;
+    position: relative;
+
+}
+.container header::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 30px;
+    background: red;
+}
+.container form .user-details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 20px 0 20px 0;
+}
+form .user-details .input-box{
+    margin-bottom: 15px;
+    width: calc(100% / 2 -20px);
+}
+.user-details .input-box .details{
+    display: block;
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+.user-details .input-box input{
+    height: 45px;
+    background: rgba(255, 255,255,0.74);
+    width: 100%;
+    outline: none;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    padding-left: 15px;
+    font-size: 16px;
+    border-bottom-width: 2px;
+    transition: all 0.3s ease;
+}
+.input-box span{
+    color: white;
+}
+.user-details .input-box input:focus,
+.user-details .input-box input:focus{
+    color: #9b59b6;
+}
+form .gender-details .gender-title{
+    font-size: 20px;
+    font-weight: 500;
+    color:  white;
+}
+form .gender-details .gender-category{
+    display: flex;
+    width: 100%;
+    margin: 14px 0;
+    justify-content: space-between; 
+}
+.gender-details .gender-category label{
+    display: flex;
+    align-items: center;
+}
+.gender-details .gender-category .dot{
+    height: 18px;
+    width: 18px;
+    background: #d9d9d9;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-left: 30px;
+    border: 3px solid transparent;
+    transition: all 0.3s ease;
+}
+#dot-1:checked ~ .gender-category label .one,
+#dot-2:checked ~ .gender-category label .two,
+#dot-3:checked ~ .gender-category label .three
+{
+    border-color: #d9d9d9 ;
+    background: #9b59b6;
+}
+form input[type="radio"]{
+    display: none;
+}
+form .register_btn{
+    height: 45px;
+    margin: 20px 0;
+}
+form .register_btn input{
+    height: 45px;
+    width: 440px;
+    font-size: 18px;
+    border-radius: 5px;
+    font-weight: 500;
+    letter-spacing: 1px;
+}
+form .back_btn{
+    height: 45px;
+}
+form .back_btn input{
+    height: 45px;
+    width: 440px;
+    font-size: 18px;
+    border-radius: 5px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    background: rgb(39, 104, 73);
+}
+@media (max-width:584px){
+    .container{
+        max-width: 100%;
+    }
+    form .user-details .input-box  input{
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    form .gender-details .gender-category{
+        width: 100%;
+    }
+    /* .container form .user-details{
+        max-height: 300px;
+        overflow-y: scroll;
+    }
+    .user-details::-webkit-scrollbar{
+        width: 0;
+    } */
+}

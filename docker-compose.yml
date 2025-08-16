@@ -1,0 +1,48 @@
+services:
+  webserver:
+    build: ./nginx/
+    container_name: webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/web/:/usr/share/nginx/html/
+      - ./nginx/config/:/etc/nginx/conf.d
+    networks:
+      - api_net
+
+  interface:
+    build: ./interface/
+    container_name: interface
+    restart: unless-stopped
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+      - DB_HOST=${DB_HOST}
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./interface/:/app
+    networks:
+      - api_net
+
+  database:
+    image: postgres:14.5
+    container_name: psql
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./utilities/:/utilities
+      - ./utilities/dbconstruct.sql:/docker-entrypoint-initdb.d/dbconstruct.sql
+    networks:
+      - api_net
+
+networks:
+  api_net:
