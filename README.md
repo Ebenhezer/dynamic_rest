@@ -70,8 +70,8 @@ project-root/
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/dynamic-rest-iot.git
-   cd dynamic-rest-iot
+   git clone https://github.com/Ebenhezer/dynamic_rest.git
+   cd dynamic_rest
    ```
 
 2. **Set environment variables**
@@ -97,7 +97,7 @@ project-root/
 
 ## 🔧 Development Notes
 
-- **Frontend files** are served from the `web/main/` directory.  
+- **Frontend files** are served from the `nginx/web/` directory.  
   
 - **Custom Nginx Config**: Place `.conf` files inside `nginx/config/` and they will override defaults.
 
@@ -107,7 +107,7 @@ project-root/
 
 ## 🛠 Troubleshooting
 
-- **403 Forbidden**: Ensure `index.html` exists in `web/main/`.
+- **403 Forbidden**: Ensure `index.html` exists in `nginx/web/`.
 - **Nginx Config Missing Warning**: If you override `/etc/nginx/conf.d/`, ensure it contains at least one valid `.conf` file.
 - **Database Connection Errors**: Confirm `.env` values match between `interface` service and `database` service.
 
