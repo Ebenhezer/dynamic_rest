@@ -20,6 +20,7 @@ project-root/
 │
 ├── utilities/              # SQL and helper scripts
 │   ├── dbconstruct.sql
+│   └── Postman collection (Dynamic RESTful API.postman_collection)
 │
 ├── docker-compose.yml
 └── README.md

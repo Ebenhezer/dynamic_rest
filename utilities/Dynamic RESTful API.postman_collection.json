@@ -1,0 +1,346 @@
+{
+	"info": {
+		"_postman_id": "271861d0-2f06-47d4-878b-ac0268166a72",
+		"name": "Dynamic RESTful API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10433691"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "SignUp",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstname\":\"John\",\r\n    \"lastname\":\"Doe\",\r\n    \"email\":\"john@doe.com\",\r\n    \"password\":\"12345\",\r\n    \"cellphone\":\"123456789\",\r\n    \"gender\":\"M\",\r\n    \"date_of_birth\":\"01 Jan 2025\",\r\n    \"address_line_1\":\"address_line_1\",\r\n    \"address_line_2\":\"address_line_2\",\r\n    \"address_postal_code\": 2021,\r\n    \"address_state\":\"address_state\",\r\n    \"address_country\":\"address_country\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/signup",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Token type\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.access_token).to.be.a(\"string\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Host",
+								"value": "kk",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\":\"{{interface_username}}\",\r\n    \"password\": \"{{interface_password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/login",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Interface",
+			"item": [
+				{
+					"name": "Add interface",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"payload\": {\r\n        \"interface_url\": \"/psu\",\r\n        \"interface_description\": \"Power supply endpoint\",\r\n        \"table_name\": \"t_psu\",\r\n        \"update_period\": \"300\",\r\n        \"fields\":[\r\n            {\r\n                \"field_name\": \"psu_id\",\r\n                \"field_type\": \"Integer\",\r\n                \"trendable\": \"false\",\r\n                \"required\": \"true\"\r\n            },\r\n            {\r\n                \"field_name\": \"voltage\",\r\n                \"field_type\": \"Integer\",\r\n                \"trendable\": \"true\",\r\n                \"required\": \"true\"\r\n            },\r\n            {\r\n                \"field_name\": \"current\",\r\n                \"field_type\": \"Integer\",\r\n                \"trendable\": \"true\",\r\n                \"required\": \"true\"\r\n            }\r\n        ]\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/dynamic",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dynamic"
+							],
+							"query": [
+								{
+									"key": "interface_url",
+									"value": "/radar",
+									"disabled": true
+								},
+								{
+									"key": "interface_description",
+									"value": "Radar information",
+									"disabled": true
+								},
+								{
+									"key": "fields",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET interface details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test('Has success', function() {\r",
+									"    var jsonData = pm.response.json();\r",
+									"  pm.expect(jsonData).to.have.property('success');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Expected response.success to be an array\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(jsonData.success).to.be.an('array');\r",
+									"    interface = jsonData.success[0];\r",
+									"    interface_id = interface.interface_id;\r",
+									"    // Set sensor global variables\r",
+									"    pm.globals.set(\"interface_id\", interface_id);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://{{url}}/dynamic",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dynamic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update interface",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"interface_id\": {{interface_id}},\r\n    \"interface_description\": \"PSU Endpoint\",\r\n    \"table_name\": \"t_psu\",\r\n    \"notification_enabled\": true,\r\n    \"whatsapp_enabled\": true,\r\n    \"sms_enabled\": true, \r\n    \"fields\":[\r\n        {\r\n            \"field_name\": \"psu_id\",\r\n            \"field_type\": \"Integer\",\r\n            \"trendable\": \"false\",\r\n            \"required\": \"true\"\r\n        },\r\n        {\r\n            \"field_name\": \"psu_description\",\r\n            \"field_type\": \"String\",\r\n            \"trendable\": \"false\",\r\n            \"required\": \"false\"\r\n        },\r\n        {\r\n            \"field_name\": \"is_active\",\r\n            \"field_type\": \"Boolean\",\r\n            \"trendable\": \"false\",\r\n            \"required\": \"true\"\r\n        },\r\n        {\r\n            \"field_name\": \"voltage\",\r\n            \"field_type\": \"Integer\",\r\n            \"trendable\": \"true\",\r\n            \"required\": \"true\"\r\n        },\r\n        {\r\n            \"field_name\": \"current\",\r\n            \"field_type\": \"Integer\",\r\n            \"trendable\": \"true\",\r\n            \"required\": \"true\"\r\n        },\r\n        {\r\n            \"field_name\": \"soc\",\r\n            \"field_type\": \"Integer\",\r\n            \"trendable\": \"true\",\r\n            \"required\": \"true\"\r\n        },\r\n        {\r\n            \"field_name\": \"power\",\r\n            \"field_type\": \"Integer\",\r\n            \"trendable\": \"true\",\r\n            \"required\": \"true\"\r\n        },\r\n        {\r\n            \"field_name\": \"relay_state\",\r\n            \"field_type\": \"Boolean\",\r\n            \"trendable\": \"true\",\r\n            \"required\": \"true\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/dynamic",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dynamic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GET interface data",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/dynamic/interface/psu",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dynamic",
+								"interface",
+								"psu"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DELETE interface",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"interface_id\": 1755275991839\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/dynamic",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dynamic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ADD data to endpoint",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"psu_id\": 123,\r\n    \"voltage\": \"10\",\r\n    \"cpu\": \"90\",\r\n    \"ram\": \"90\",\r\n    \"disk\": \"90\",\r\n    \"soc\": \"5\",\r\n    \"is_active\": true,\r\n    \"current\": \"25\",\r\n    \"power\": \"35\",\r\n    \"relay_state\": true,\r\n    \"temperature\": \"12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://{{url}}/dynamic/interface/psu",
+							"protocol": "http",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"dynamic",
+								"interface",
+								"psu"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
