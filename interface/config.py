@@ -1,7 +1,6 @@
 import os
 import logging
 from logging.handlers import RotatingFileHandler
-from apscheduler.schedulers.background import BackgroundScheduler
 
 # Logging Configuration
 logging.basicConfig(
@@ -13,8 +12,5 @@ logging.basicConfig(
     ]
 )
 logger = logging.getLogger(__name__)
-
-# APScheduler Configuration
-scheduler = BackgroundScheduler()
 
 APP_DIR = os.path.abspath(os.path.dirname(__file__))

@@ -12,9 +12,6 @@ from email.mime.multipart import MIMEMultipart
 from email.utils import formataddr
 from fastapi import FastAPI, status
 from fastapi.responses import JSONResponse
-from pythonping import ping
-from twilio.rest import Client
-import email.utils as utils
 
 from dbUtils import DbUtils
 dbUtils = DbUtils()
@@ -106,89 +103,6 @@ class Utilities:
         # Password don't match
         return False
     
-    def getTotalDevicePerUser(self, user_id):
-        # batmons = dbUtils.getUserNumberOfBatmonById(user_id)
-        # batmons = db.query(Batmon).filter(Batmon.batmon_id == user_id).distinct(Batmon.batmon_id).count()
-        # gps = db.query(Gps).filter(Gps.gps_owner == user_id).distinct(Gps.gps_id).count()
-        # mets = db.query(Met).filter(Met.met_owner == user_id).distinct(Met.met_id).count()
-        # sensors = db.query(Sensor).filter(Sensor.sensor_owner == user_id).distinct(Sensor.sensor_id).count()
-        # workstations = db.query(Ws).filter(Ws.ws_id == user_id).distinct(Ws.ws_id).count()
-        # switches = db.query(Switch).filter(Switch.switch_id == user_id).distinct(Switch.switch_id).count()
-        interfaces = db.query(Interface).filter(Interface.interface_id == user_id).distinct(Interface.interface_id).count()
-        total_devices = interfaces #batmons + gps + mets + sensors + workstations + switches+ 
-
-        return total_devices 
-    
-    def userReachedDeviceLimit(self, user_id, account_type):
-        max_devices = 0
-        if account_type == 1:
-            # Basic
-            max_devices = 5
-        elif account_type == 2:
-            # Start up
-            max_devices = 20
-        elif account_type == 3:
-            # Grouth
-            max_devices = 50
-        elif account_type == 4:
-            # Premium
-            max_devices = 100
-        elif account_type == 5:
-            # Enterprise
-            max_devices = 1000
-        else:
-            max_devices = 10
-
-        if self.getTotalDevicePerUser(user_id) >= max_devices:
-            print(self.getTotalDevicePerUser(user_id))
-            return True
-        else:
-            return False
-
-    def getJsonUserInfoByAPIKey(self, api_key):
-        try:
-            account = dbUtils.getUserByAPIKey(api_key)
-            user_id = account[0]
-            firstname = account[3]
-            last_name = account[4]
-            account_type = account[17]
-            time_offset = account[22]
-
-            info = {
-                "user_id": user_id,
-                "firstname": firstname,
-                "last_name": last_name,
-                "account_type": account_type,
-                "time_offset": time_offset
-            }
-
-            return 
-        except Exception:
-            message = "(A)Failed to get user info. Try to login again."
-            return False
-
-    def getJsonUserInfoByID(self, user_id):
-        try:
-            user_info = dbUtils.getUserById(user_id)  
-            user_id = user_info[0]
-            firstname = user_info[3]
-            last_name = user_info[4]
-            account_type = user_info[17]
-            time_offset = user_info[22]
-
-            info = {
-                "user_id": user_id,
-                "firstname": firstname,
-                "last_name": last_name,
-                "account_type": account_type,
-                "time_offset": time_offset
-            }
-
-            return info
-        except Exception:
-            message = "(A)Failed to get user info. Try to login again."
-            return False
-        
     def get_ip_location(self, ip_address):
         url = f"https://ipapi.co/{ip_address}/json/"
         response = requests.get(url)
@@ -203,91 +117,7 @@ class Utilities:
             return f"Country: {country}, City: {city}"
         else:
             return "Location information not available"
-        
-    def allowedToUpdate(self, account_type, current_time, previous_time):
-        allowed = True
-        if account_type != None:
-            if account_type == 1:
-                # These account types can only update every minute
-                update_period = 59
-            elif account_type >= 2 and account_type <= 4:
-                # These account types can only update every 30second
-                update_period = 30
-            elif account_type > 4 :
-                # These account types can only update every seconds
-                update_period = 1
-        else:
-            # If the account_type is None, then default is a minute
-            update_period = 59
 
-        # Then check if the time difference is less that the allowed updated period 
-        time_diff = current_time - previous_time
-        remaining_time_sec = update_period - time_diff
-        if time_diff < update_period:
-            allowed = False
-        else:
-            allowed = True
-
-        allowed_info = {
-                "allowed": allowed,
-                "remaining_time_sec": remaining_time_sec
-            }
-        return allowed_info
-
-    def account_list(self):
-        return [
-            { 
-                "account_type": "1", 
-                "name": "Basic (Free)", 
-                "retention_time_days": 35, 
-                "api_calls": 45000,
-                "max_devices": 5,
-                "update_period_sec": 60,
-                "monthly_cost_zar": 0,
-                "per_call_price": 0.015
-            },
-            { 
-                "account_type": "2", 
-                "name": "Start-up", 
-                "retention_time_days": 65, 
-                "api_calls": 150000, 
-                "max_devices": 20,
-                "update_period_sec": 30,
-                "monthly_cost_zar": 30,
-                "per_call_price": 0.013
-            },
-            { 
-                "account_type": "3", 
-                "name": "Growth", 
-                "retention_time_days": 95, 
-                "api_calls": 500000, 
-                "max_devices": 50,
-                "update_period_sec": 30,
-                "monthly_cost_zar": 49,
-                "per_call_price": 0.013
-            },
-            { 
-                "account_type": "4", 
-                "name": "Premium", 
-                "retention_time_days": 190, 
-                "api_calls": -1, 
-                "max_devices": 100,
-                "update_period_sec": 1,
-                "annual_cost_zar": 79,
-                "per_call_price": 0.011
-            },
-            { 
-                "account_type": "5", 
-                "name": "Enterprise", 
-                "retention_time_days": 7300, 
-                "api_calls": -1, 
-                "max_devices": 1000,
-                "update_period_sec": 1,
-                "monthly_cost_zar": "300",
-                "per_call_price": -1
-            }
-        ]
-    
     def is_valid_email(self, email: str) -> bool:
         return re.match(r"[^@]+@[^@]+\.[^@]+", email) is not None
 

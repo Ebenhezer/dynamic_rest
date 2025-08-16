@@ -93,13 +93,6 @@ async def add_interface_data(request: Request, api_key: APIKey = Depends(GetApiK
             message = "(A)Failed to get user info. Try to login again. "+str(error)
             return utilities.failedMessage(message)
         
-        # Check if user has reached max number of devices
-        limit_reached = utilities.userReachedDeviceLimit(user_id, account_type)
-
-        if limit_reached == True:
-            message = "Maximum number of devices reached. Please upgrade your account."
-            return utilities.failedMessage(message)
-        
         try:
             # Endpoint name or url
             interface_url = None
@@ -871,27 +864,6 @@ async def update_interface(request: Request, interface_url: str):
         # Check if payload has epoch time. If not, then we set the time to current epoch time
         if new_row.epoch_time == None:
             new_row.epoch_time = current_epoch_time
-
-        
-        # Now check the account type
-        prev_last_modified = interface.last_modified
-        last_modified = current_epoch_time
-        try:
-            user_info = utilities.getJsonUserInfoByID(interface_owner)
-            user_info = db.query(User).filter(User.user_id == interface_owner).first()
-            account_type = user_info.account_type
-            
-            allowed_to_update = utilities.allowedToUpdate(account_type, last_modified, prev_last_modified)
-            if allowed_to_update["allowed"] != True:
-                message = "Please wait for the update period to lapse. Remaining time is: " +str(allowed_to_update["remaining_time_sec"] )
-                response_message = {
-                    "message": message,
-                    "remaining_time_sec": allowed_to_update["remaining_time_sec"]
-                }
-                return utilities.failedMessage(response_message)
-        except Exception as error:
-            message = "Failed to validate owner's account information. "+str(error)
-            return utilities.failedMessage(message)
         
         try:
             db.add(new_row)
