@@ -119,20 +119,7 @@ def token_generate(request: Request, payload: LoginDetails):
         return utilities.failedMessage(message)
 
     if account_verified == None or account_verified == False:
-        # Send verification e-mail 
-        try:
-            context = {
-                "name": firstname,
-                "verification_link": f"https://spoilerinterface.com/dashboard/verification/{token}",
-                "message":""
-            }
-            #send_email_with_smtplib(to=email_address, subject="Email verification", template_name="mails/signup_mail.html", context=context)
-            verification_sent = True
-            
-        except Exception as e:
-            logger.error("Error: ", str(e))
-            verification_sent = False
-
+        verification_sent = True    
         message ="Please verify your email. A verification link has been sent to: "+ email_address  
         response = {
             "account_verified": False,
@@ -308,16 +295,7 @@ def signup(payload: RegisterProfile):
     
     # Send verification e-mail 
     try:
-        context = {
-            "name": firstname,
-            "verification_link": f"https://spoilerinterface.com/dashboard/verification/{token}",
-            "message":""
-        }
-        
-        #send_email_with_smtplib(to=email, subject="Email verification", template_name="mails/signup_mail.html", context=context)
-        # utilities.sendVerificationMail(email, firstname, token)
         notification_sent = True
-        
     except Exception as e:
         logger.error(str(e))
         notification_sent = False
